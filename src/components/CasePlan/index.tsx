@@ -85,9 +85,11 @@ const CasePlanProvider: React.FC = (props) => {
                 'Content-Type': 'application/json',
             }
         }).then((data) => {
-            data.json().then((payload) => {
-                dispatch({type: 'loaded', payload})
-            })
+            if (data.status === 200) {
+                data.json().then((payload) => {
+                    dispatch({type: 'loaded', payload})
+                })
+            }
         })
     }, [])
 
