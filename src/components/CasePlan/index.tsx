@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useReducer} from 'react'
+import React, {useCallback, useContext, useEffect, useReducer} from 'react'
 import {Button} from 'antd';
 import WarningSigns from './WarningSigns';
 import CopingStrategies from './CopingStrategies';
@@ -61,6 +61,8 @@ const CasePlanReducer: React.Reducer<CasePlan, { type: string, payload: any }> =
             return {...state, distractions: action.payload}
         case'help':
             return {...state, help: action.payload}
+        case 'loaded':
+            return action.payload
         default:
             return state
     }
@@ -70,6 +72,20 @@ export const CasePlanContext = React.createContext<CasePlan>(initCasePlan)
 
 const CasePlanProvider: React.FC = (props) => {
     const [casePlan, dispatch] = useReducer(CasePlanReducer, initCasePlan)
+
+    useEffect(() => {
+        fetch(`https://aleaujvp3b.execute-api.us-east-1.amazonaws.com/Prod/caseplans/${window.location.pathname.split('/')[1]}`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        }).then((data) => {
+            data.json().then((payload) => {
+                dispatch({type: 'loaded', payload})
+            })
+        })
+    }, [])
 
     return <CasePlanContext.Provider value={{
         ...casePlan,
