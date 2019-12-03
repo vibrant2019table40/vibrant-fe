@@ -1,4 +1,4 @@
-import React, {useContext, useReducer} from 'react'
+import React, {useCallback, useContext, useReducer} from 'react'
 import {Button} from 'antd';
 import WarningSigns from './WarningSigns';
 import CopingStrategies from './CopingStrategies';
@@ -24,8 +24,10 @@ export interface PersonItem extends ListItem {
 export interface CasePlan {
     warnings: TextListItem[]
     coping: TextListItem[]
-    distractions: (PersonItem | TextListItem)[]
-    help: string[]
+    distractions: {
+        persons: PersonItem[]
+    }
+    help: PersonItem[]
     professionals: string[]
     safety: TextListItem[]
     live: string
@@ -34,7 +36,9 @@ export interface CasePlan {
 
 const initCasePlan: CasePlan = {
     coping: [],
-    distractions: [],
+    distractions: {
+        persons: []
+    },
     help: [],
     live: "",
     professionals: [],
@@ -53,6 +57,10 @@ const CasePlanReducer: React.Reducer<CasePlan, { type: string, payload: any }> =
             return {...state, safety: action.payload}
         case 'live':
             return {...state, live: action.payload}
+        case 'distractions':
+            return {...state, distractions: action.payload}
+        case'help':
+            return {...state, help: action.payload}
         default:
             return state
     }
@@ -69,20 +77,20 @@ const CasePlanProvider: React.FC = (props) => {
     }}>{props.children}</CasePlanContext.Provider>
 }
 
-const CasePlan = () => {
+const CasePlanForm = () => {
     const {coping, live, safety, warnings, distractions, help, professionals} = useContext(CasePlanContext)
 
-    const save = () => fetch(`https://aleaujvp3b.execute-api.us-east-1.amazonaws.com/Prod/caseplans/${window.location.pathname.split('/')[1]}`, {
+    const save = useCallback(() => fetch(`https://aleaujvp3b.execute-api.us-east-1.amazonaws.com/Prod/caseplans/${window.location.pathname.split('/')[1]}`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({coping, live, safety, warnings, distractions, help, professionals})
-    })
+    }), [coping, live, safety, warnings, distractions, help, professionals])
 
     return (
-        <CasePlanProvider>
+        <div>
             <WarningSigns/>
             <CopingStrategies/>
             <Distractions/>
@@ -95,6 +103,14 @@ const CasePlan = () => {
                 <Button style={{marginRight: 5}}>Share</Button>
                 <Button type='primary' onClick={() => save()}>Save</Button>
             </div>
+        </div>
+    )
+}
+
+const CasePlan = () => {
+    return (
+        <CasePlanProvider>
+            <CasePlanForm/>
         </CasePlanProvider>
     )
 }

@@ -1,15 +1,16 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Step from './Step';
+import PersonListManager from "./PersonListManager";
+import {CasePlanContext} from "./index";
 
 const Help = () => {
+    const {help, set} = useContext(CasePlanContext)
 
     return (
         <div>
             <Step number={4} description='People whom I can ask for help'/>
 
-            <ol>
-                <li>Suicide Prevention Lifeline Phone: 1-800-273-TALK (8255)</li>
-            </ol>
+            <PersonListManager items={help} setItems={(x) => set('help', x)}/>
         </div>
     )
 }

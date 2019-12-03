@@ -1,29 +1,43 @@
 import React from 'react'
-import {Input, Icon, Button} from 'antd';
+import {Button, Icon, Input, Form} from 'antd';
 import shortid from 'shortid';
-import {TextListItem} from './index';
+import {PersonItem} from './index';
 
 interface PersonListManagerProps {
-    items: TextListItem[]
-    setItems: (i: TextListItem[]) => void
+    items: PersonItem[]
+    setItems: (i: PersonItem[]) => void
 }
 
 const PersonListManager: React.FC<PersonListManagerProps> = ({items, setItems}) => {
-    const changeItem = (id: string, text: string) => setItems(items.map(i => i.id === id ? {...i, text} : i))
+    const changeName = (id: string, name: string) => setItems(items.map(i => i.id === id ? {...i, name} : i))
+    const changePhone = (id: string, phone: string) => setItems(items.map(i => i.id === id ? {...i, phone} : i))
 
     return (
         <div>
-            <ul>{items.map((i: TextListItem) => (
+            <h4>People:</h4>
+
+            <ul style={{listStyleType: 'none'}}>{items.map((i) => (
                 <li key={i.id}>
-                    <Input onChange={({target: {value}}) => changeItem(i.id, value)} style={{marginBottom: 5}}
-                           value={i.text}/>
+                    <Form.Item label='Name'>
+                        <Input onChange={({target: {value}}) => changeName(i.id, value)}
+                               style={{marginBottom: 5}}
+                               value={i.name}
+                               title={'name'}/>
+                    </Form.Item>
+
+                    <Form.Item label='Address'>
+                        <Input type='phone' onChange={({target: {value}}) => changePhone(i.id, value)}
+                               style={{marginBottom: 5}}
+                               value={i.phone}/>
+                    </Form.Item>
+                    <hr/>
                 </li>)
             )}
             </ul>
 
             <div>
-                <Button onClick={() => setItems([...items, {id: shortid.generate(), text: ''}])}>
-                    <Icon type='plus'/> Add
+                <Button onClick={() => setItems([...items, {id: shortid.generate(), name: '', phone: ''}])}>
+                    <Icon type='plus'/> Add Person
                 </Button>
             </div>
         </div>
