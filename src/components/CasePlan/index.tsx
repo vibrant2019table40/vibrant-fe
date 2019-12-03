@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useReducer} from 'react'
-import {Button} from 'antd';
+import {Button, Col, Input, Row} from 'antd';
 import WarningSigns from './WarningSigns';
 import CopingStrategies from './CopingStrategies';
 import Distractions from './Distractions';
@@ -7,6 +7,8 @@ import Help from './Help';
 import Professionals from './Professionals';
 import Safety from './Safety';
 import Live from './Live';
+
+const {Search} = Input
 
 export interface ListItem {
     id: string
@@ -28,7 +30,7 @@ export interface CasePlan {
         persons: PersonItem[]
     }
     help: PersonItem[]
-    professionals: string[]
+    professionals: PersonItem[]
     safety: TextListItem[]
     live: string
     set: (entity: string, payload: any) => void
@@ -63,6 +65,8 @@ const CasePlanReducer: React.Reducer<CasePlan, { type: string, payload: any }> =
             return {...state, help: action.payload}
         case 'loaded':
             return action.payload
+        case 'professionals':
+            return {...state, professionals: action.payload}
         default:
             return state
     }
@@ -105,8 +109,17 @@ const CasePlanForm = () => {
         body: JSON.stringify({coping, live, safety, warnings, distractions, help, professionals})
     }), [coping, live, safety, warnings, distractions, help, professionals])
 
+    const share = (code: string, email: string) => fetch(`https://aleaujvp3b.execute-api.us-east-1.amazonaws.com/Prod/share/`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            code,
+            email
+        })
+    }).then(() => window.alert('Shared Successfully')).catch(() => window.alert('Something went wrong'))
+
     return (
-        <div>
+        <div style={{marginBottom: 30}}>
             <WarningSigns/>
             <CopingStrategies/>
             <Distractions/>
@@ -115,8 +128,18 @@ const CasePlanForm = () => {
             <Safety/>
             <Live/>
 
+            <br/><br/>
+
+            <Row>
+                <Col span={12}>
+                    <Search placeholder="Email"
+                            onSearch={(value: string) => share(window.location.pathname.split('/')[1], value)}
+                            enterButton='Share'/>
+                </Col>
+
+            </Row>
+
             <div style={{float: 'right', marginTop: 15}}>
-                <Button style={{marginRight: 5}}>Share</Button>
                 <Button type='primary' onClick={() => save()}>Save</Button>
             </div>
         </div>
