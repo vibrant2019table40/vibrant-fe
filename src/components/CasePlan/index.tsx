@@ -42,7 +42,7 @@ const initCasePlan: CasePlan = {
         persons: []
     },
     help: [],
-    live: "",
+    live: '',
     professionals: [],
     safety: [],
     warnings: [],
@@ -130,18 +130,17 @@ const CasePlanForm = () => {
             <Safety/>
             <Live/>
 
-            <br/><br/>
-
-            <Row>
+            <Row style={{marginTop: 15}}>
+                <h2>Share:</h2>
                 <Col span={12}>
-                    <Search placeholder="Email"
+                    <Search placeholder='Email'
                             onSearch={(value: string) => share(window.location.pathname.split('/')[1], value)}
-                            enterButton='Share'/>
+                            enterButton='Send'/>
                 </Col>
 
             </Row>
 
-            <div style={{float: 'right', marginTop: 15}}>
+            <div style={{marginTop: 30}}>
                 <Button type='primary' onClick={() => save()}>Save</Button>
             </div>
         </div>
