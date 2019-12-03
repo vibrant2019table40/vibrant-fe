@@ -25,7 +25,7 @@ const PersonListManager: React.FC<PersonListManagerProps> = ({items, setItems}) 
                                title={'name'}/>
                     </Form.Item>
 
-                    <Form.Item label='Address'>
+                    <Form.Item label='Phone'>
                         <Input type='phone' onChange={({target: {value}}) => changePhone(i.id, value)}
                                style={{marginBottom: 5}}
                                value={i.phone}/>
