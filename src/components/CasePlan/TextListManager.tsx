@@ -13,7 +13,7 @@ const TextListManager: React.FC<TextListManagerProps> = ({items, setItems}) => {
 
     return (
         <div>
-            <ul>{items.map((i: TextListItem) => (
+            <ul style={{listStyleType: 'none', padding: 0}}>{items.map((i: TextListItem) => (
                 <li key={i.id}>
                     <Input onChange={({target: {value}}) => changeItem(i.id, value)} style={{marginBottom: 5}}
                            value={i.text}/>

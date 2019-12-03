@@ -16,7 +16,7 @@ const PersonListManager: React.FC<PersonListManagerProps> = ({items, setItems}) 
         <div>
             <h4>People:</h4>
 
-            <ul style={{listStyleType: 'none'}}>{items.map((i) => (
+            <ul style={{listStyleType: 'none', padding: 0}}>{items.map((i) => (
                 <li key={i.id}>
                     <Form.Item label='Name'>
                         <Input onChange={({target: {value}}) => changeName(i.id, value)}
