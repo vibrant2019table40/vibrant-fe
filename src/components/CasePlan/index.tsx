@@ -109,7 +109,7 @@ const CasePlanForm = () => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({coping, live, safety, warnings, distractions, help, professionals})
-    }), [coping, live, safety, warnings, distractions, help, professionals])
+    }).then(() => window.alert('Saved Successfully')).catch(() => window.alert('Something went wrong')), [coping, live, safety, warnings, distractions, help, professionals])
 
     const share = (code: string, email: string) => fetch(`https://aleaujvp3b.execute-api.us-east-1.amazonaws.com/Prod/share/`, {
         method: 'POST',
