@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react'
+import React, {useContext, useReducer} from 'react'
 import {Button} from 'antd';
 import WarningSigns from './WarningSigns';
 import CopingStrategies from './CopingStrategies';
@@ -24,7 +24,7 @@ export interface PersonItem extends ListItem {
 export interface CasePlan {
     warnings: TextListItem[]
     coping: TextListItem[]
-    distractions: (PersonItem|TextListItem)[]
+    distractions: (PersonItem | TextListItem)[]
     help: string[]
     professionals: string[]
     safety: TextListItem[]
@@ -70,6 +70,17 @@ const CasePlanProvider: React.FC = (props) => {
 }
 
 const CasePlan = () => {
+    const {coping, live, safety, warnings, distractions, help, professionals} = useContext(CasePlanContext)
+
+    const save = () => fetch(`https://aleaujvp3b.execute-api.us-east-1.amazonaws.com/Prod/caseplans/${window.location.pathname.split('/')[1]}`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({coping, live, safety, warnings, distractions, help, professionals})
+    })
+
     return (
         <CasePlanProvider>
             <WarningSigns/>
@@ -82,7 +93,7 @@ const CasePlan = () => {
 
             <div style={{float: 'right', marginTop: 15}}>
                 <Button style={{marginRight: 5}}>Share</Button>
-                <Button type='primary'>Save</Button>
+                <Button type='primary' onClick={() => save()}>Save</Button>
             </div>
         </CasePlanProvider>
     )
