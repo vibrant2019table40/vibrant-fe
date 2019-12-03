@@ -1,0 +1,121 @@
+{
+    "ETag": "E15II1YELKE21W",
+    "DistributionConfig": {
+        "CallerReference": "1575329871891",
+        "Aliases": {
+            "Quantity": 2,
+            "Items": [
+                "www.vibrant-table40.com",
+                "vibrant-table40.com"
+            ]
+        },
+        "DefaultRootObject": "index.html",
+        "Origins": {
+            "Quantity": 1,
+            "Items": [
+                {
+                    "Id": "S3-vibrant-fe-us-east-1",
+                    "DomainName": "vibrant-fe-us-east-1.s3.amazonaws.com",
+                    "OriginPath": "",
+                    "CustomHeaders": {
+                        "Quantity": 0
+                    },
+                    "S3OriginConfig": {
+                        "OriginAccessIdentity": "origin-access-identity/cloudfront/E3HDFBEWMFB9HY"
+                    }
+                }
+            ]
+        },
+        "OriginGroups": {
+            "Quantity": 0
+        },
+        "DefaultCacheBehavior": {
+            "TargetOriginId": "S3-vibrant-fe-us-east-1",
+            "ForwardedValues": {
+                "QueryString": false,
+                "Cookies": {
+                    "Forward": "none"
+                },
+                "Headers": {
+                    "Quantity": 0
+                },
+                "QueryStringCacheKeys": {
+                    "Quantity": 0
+                }
+            },
+            "TrustedSigners": {
+                "Enabled": false,
+                "Quantity": 0
+            },
+            "ViewerProtocolPolicy": "redirect-to-https",
+            "MinTTL": 0,
+            "AllowedMethods": {
+                "Quantity": 2,
+                "Items": [
+                    "HEAD",
+                    "GET"
+                ],
+                "CachedMethods": {
+                    "Quantity": 2,
+                    "Items": [
+                        "HEAD",
+                        "GET"
+                    ]
+                }
+            },
+            "SmoothStreaming": false,
+            "DefaultTTL": 86400,
+            "MaxTTL": 31536000,
+            "Compress": false,
+            "LambdaFunctionAssociations": {
+                "Quantity": 0
+            },
+            "FieldLevelEncryptionId": ""
+        },
+        "CacheBehaviors": {
+            "Quantity": 0
+        },
+        "CustomErrorResponses": {
+            "Quantity": 2,
+            "Items": [
+                {
+                    "ErrorCode": 403,
+                    "ResponsePagePath": "/index.html",
+                    "ResponseCode": "200",
+                    "ErrorCachingMinTTL": 30
+                },
+                {
+                    "ErrorCode": 404,
+                    "ResponsePagePath": "/index.html",
+                    "ResponseCode": "200",
+                    "ErrorCachingMinTTL": 30
+                }
+            ]
+        },
+        "Comment": "Vibrant CloudFront",
+        "Logging": {
+            "Enabled": true,
+            "IncludeCookies": false,
+            "Bucket": "vibrant-cloudfront-logs.s3.amazonaws.com",
+            "Prefix": ""
+        },
+        "PriceClass": "PriceClass_100",
+        "Enabled": true,
+        "ViewerCertificate": {
+            "ACMCertificateArn": "arn:aws:acm:us-east-1:634717624045:certificate/a238ac24-425c-44c1-9487-abb79b5bd5b0",
+            "SSLSupportMethod": "sni-only",
+            "MinimumProtocolVersion": "TLSv1.2_2018",
+            "Certificate": "arn:aws:acm:us-east-1:634717624045:certificate/a238ac24-425c-44c1-9487-abb79b5bd5b0",
+            "CertificateSource": "acm"
+        },
+        "Restrictions": {
+            "GeoRestriction": {
+                "RestrictionType": "none",
+                "Quantity": 0
+            }
+        },
+        "WebACLId": "",
+        "HttpVersion": "http2",
+        "IsIPV6Enabled": true
+    }
+}

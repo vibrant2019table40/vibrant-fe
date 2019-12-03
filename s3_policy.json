@@ -1,0 +1,40 @@
+{
+  "Version": "2012-10-17",
+  "Id": "SSLOnly",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": [ 
+          "634717624045" 
+        ]
+      },
+      "Action": "s3:Get*",
+      "Resource": "arn:aws:s3:::vibrant-fe-us-east-1/*"
+    },
+    {
+      "Effect": "Deny",
+      "Principal": "*",
+      "Action": "*",
+      "Resource": "arn:aws:s3:::vibrant-fe-us-east-1/*",
+      "Condition": {
+        "Bool": {
+          "aws:SecureTransport": "false"
+        }
+      }
+    }
+  ],
+  "Id": "PolicyForCloudFrontPrivateContent",
+  "Statement": [
+      {
+          "Sid": "1",
+          "Effect": "Allow",
+          "Principal": {
+              "AWS": "arn:aws:iam::cloudfront:user/CloudFront Origin Access Identity E3HDFBEWMFB9HY"
+          },
+          "Action": "s3:GetObject",
+          "Resource": "arn:aws:s3:::vibrant-fe-us-east-1/*"
+      }
+  ]
+
+}
